@@ -12,10 +12,10 @@ Context is irrelevant for this Dockerfile, it's all contained within the Dockerf
 
 For example, to rebuild the 10.3 Docker Store Apama image using the latest Ubuntu as a base image you would run:
 
-    docker build -t apama-correlator:ubuntu --build-arg BASE_OS=ubuntu --build-arg APAMA_VERSION=10.3 -f https://raw.githubusercontent.com/SoftwareAG/apama-streaming-analytics-docker-base/master/Dockerfile .
+    docker build -t apama-correlator:ubuntu --build-arg BASE_OS=ubuntu --build-arg APAMA_VERSION=10.3 https://github.com/SoftwareAG/apama-streaming-analytics-docker-base.git
 
 Alternatively, to rebuild the Apama builder image from store you would run:
 
-    docker build -t apama-builder:ubuntu --build-arg BASE_OS=ubuntu --build-arg APAMA_VERSION=10.3 --build-arg APAMA_IMAGE=store/softwareag/apama-builder:10.3 -f https://raw.githubusercontent.com/SoftwareAG/apama-streaming-analytics-docker-base/master/Dockerfile .
+    docker build -t apama-builder:ubuntu --build-arg BASE_OS=ubuntu --build-arg APAMA_VERSION=10.3 --build-arg APAMA_IMAGE=store/softwareag/apama-builder:10.3 https://github.com/SoftwareAG/apama-streaming-analytics-docker-base.git
 
 
