@@ -7,7 +7,7 @@ FROM ${BASE_OS}
 MAINTAINER SoftwareAG
 
 SHELL ["/bin/bash", "-c"]
-RUN groupadd -g 1724 sagadmin && useradd -d /opt/softwareag --no-create-home -g 1724 -u 1724 sagadmin
+RUN echo sagadmin:x:1724: >> /etc/group && echo sagadmin:x:1724:1724::/opt/softwareag:/sbin/nologin >> /etc/passwd
 
 COPY --from=orig --chown=sagadmin:sagadmin /opt/softwareag /opt/softwareag
 
