@@ -1,0 +1,7 @@
+monitor m
+{
+	action onload()
+	{
+		log "Hello World";
+	}
+}

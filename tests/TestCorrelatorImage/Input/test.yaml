@@ -1,0 +1,79 @@
+correlator:
+  pythonSupport: true
+  javaApplicationSupport: true
+  initialization:
+    list:
+      - ${APAMA_HOME}/monitors/ManagementImpl.mon
+      - ${APAMA_HOME}/monitors/Management.mon
+      - ${APAMA_HOME}/monitors/JSONPlugin.mon
+      - ${APAMA_HOME}/monitors/TimeFormatEvents.mon
+      - ${APAMA_HOME}/monitors/AnyExtractor.mon
+      - ${APAMA_HOME}/monitors/ConnectivityPluginsControl.mon
+      - ${APAMA_HOME}/monitors/ConnectivityPlugins.mon
+      - ${APAMA_HOME}/monitors/HTTPClientEvents.mon
+      - ${APAMA_HOME}/monitors/data_storage/MemoryStore.mon
+      - ${APAMA_HOME}/monitors/ScenarioService.mon
+      - ${APAMA_HOME}/monitors/StatusSupport.mon
+      - ${APAMA_HOME}/monitors/R/RPlugin.mon
+      - ${PARENT_DIR}/test.mon
+
+connectivityPlugins:
+  httpServer:
+    libraryName: connectivity-http-server
+    class: HTTPServer
+  httpClient:
+    libraryName: connectivity-http-client
+    class: HTTPClient
+  classifier:
+    libraryName: ClassifierCodec
+    class: ClassifierCodec
+  diagnostic:
+    libraryName: DiagnosticCodec
+    class: DiagnosticCodec
+  json:
+    libraryName: connectivity-json-codec
+    class: JSONCodec
+  string:
+    libraryName: connectivity-string-codec
+    class: StringCodec
+  mapper:
+    libraryName: MapperCodec
+    class: MapperCodec
+  unitTestHarness:
+    classpath: ${APAMA_HOME}/lib/connectivity-unit-test-harness.jar
+    class: com.softwareag.connectivity.testplugins.UnitTestHarness
+
+
+dynamicChainManagers:
+   httpServer:
+     managerConfig:
+       port: 8080
+     transport: httpServer
+
+dynamicChains:
+   httpServer:
+     - apama.eventMap
+     - mapper
+     - classifier:
+        rules: []
+     - json
+     - string
+     - unitTestHarness:
+         pluginUnderTest: towardsTransport
+     - diagnostic
+     - httpServer:
+         allowedMethods: [PUT]
+         automaticResponses: true
+
+startChains:
+   http:
+     - apama.eventMap
+     - mapper
+     - classifier:
+        rules: []
+     - json
+     - string
+     - diagnostic
+     - httpClient:
+        host: www.google.com
+        port: 80
