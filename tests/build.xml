@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	Copyright (c) 2014-2015 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.$ 
+	Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG 
+-->
+<project default="build" name="ApamaDataGroupsSampleBuild">
+	<presetdef name="javac">
+		<javac includeantruntime="false" />
+	</presetdef>
+
+	
+	<property environment="env"/>
+
+	<property name="apama-home" location="${env.APAMA_HOME}"/>
+
+	<property name="sample-dir" location="."/>
+	
+	<property name="output-dir" location="."/>
+
+	<fail unless="env.APAMA_LIBRARY_VERSION" message="Please run the bin/apama_env script before attempting to build this sample."/>
+	
+
+	<!-- Targets for building -->
+
+	<target name="build" description="Build API Java plugin">
+		<delete dir="${output-dir}/classes"/>
+		<mkdir dir="${output-dir}/classes"/>
+		<mkdir dir="${output-dir}/classes/META-INF"/>
+		
+		<javac srcdir="${sample-dir}" destdir="${output-dir}/classes" debug="true">
+			<classpath>
+				<pathelement location="${apama-home}/lib/ap-correlator-extension-api.jar"/>
+			</classpath>
+		</javac>
+
+		<java classname="com.apama.jmon.annotation.DirectoryProcessor"
+			dir="${output-dir}/classes" failonerror="true" fork="yes" 
+			classpath="${apama-home}/lib/ap-correlator-extension-api.jar"
+		>
+			<arg value="-r"/>
+			<arg value="-d"/>
+			<arg value="."/>
+			<arg value="-o"/>
+			<arg value="META-INF/jmon-jar.xml"/>
+		</java>
+
+		<jar jarfile="${output-dir}/test.jar">
+			<fileset dir="${output-dir}/classes" includes="**/*.class"/>
+			<fileset dir="${output-dir}/classes" includes="META-INF/jmon-jar.xml"/>
+		</jar>
+	</target>
+
+	<!-- Targets for running -->
+
+	<import file="${apama-home}/etc/apama-macros.xml" />
+	
+</project>

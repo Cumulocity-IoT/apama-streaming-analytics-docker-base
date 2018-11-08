@@ -1,0 +1,9 @@
+
+/** This monitor is responsible for ...  */
+monitor test {
+	action onload() {
+		log "Loaded monitor test" at INFO;
+		
+		
+	}
+}

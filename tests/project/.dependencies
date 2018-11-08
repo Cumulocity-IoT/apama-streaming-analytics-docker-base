@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<apama-project>
+	<dependency>
+		<dependencyentry path="" kind="src"/>
+	</dependency>
+	<catalogs>
+		<catalog path="catalogs/Generated scenario blocks" type="block"/>
+		<catalog path="catalogs/TestProject blocks" type="block"/>
+		<catalog path="catalogs/TestProject functions" type="function"/>
+	</catalogs>
+	<bundles>
+	</bundles>
+</apama-project>
