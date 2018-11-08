@@ -18,4 +18,15 @@ Alternatively, to rebuild the Apama builder image from store you would run:
 
     docker build -t apama-builder:ubuntu --build-arg BASE_OS=ubuntu --build-arg APAMA_VERSION=10.3 --build-arg APAMA_IMAGE=store/softwareag/apama-builder:10.3 https://github.com/SoftwareAG/apama-streaming-analytics-docker-base.git
 
+## Testing the images
 
+The dockerfile also comes with a second docker project which will test the images built be the first one in the `tests` directory. To use it you should build a second image setting the tags of your images as arguments to that build process. That build file has two build arguments:
+
+* `APAMA_IMAGE` - The tag of the apama-correlator image. It defaults to the image from store.
+* `APAMA_BUILDER` - The tag of the apama-builder image. It defaults to the image from store.
+
+To run these tests you'll probably want to check out the git repository and run it from the working copy. For example, if you just rebuilt the correlator image you could run it like:
+
+    docker build -t test-ubuntu-correlator --build-arg APAMA_IMAGE=apama-correlator:ubuntu tests
+
+If the build completes successfully then the tests have passed.
